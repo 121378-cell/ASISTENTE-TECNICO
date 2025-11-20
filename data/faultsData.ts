@@ -2,103 +2,194 @@
 import { Fault } from '../types';
 
 export const faults: Fault[] = [
+  // --- ZENIUS Y GENERAL ---
   {
-    id: 'no-power',
-    symptom: 'La cafetera no enciende',
+    id: 'lever-stuck',
+    symptom: 'Palanca bloqueada / Grupo atascado (Zenius/Gemini)',
     causes: [
-      'El cable de alimentación no está bien conectado.',
-      'El enchufe de la pared no tiene electricidad.',
-      'El interruptor principal de la máquina está apagado.',
+      'Bloqueo hidráulico: Cápsula hinchada por presión y calor dentro de la cámara de infusión.',
+      'Doble cápsula: Se introdujo una nueva sin caer la anterior, creando un atasco físico.',
+      'Mecanismo roto: Engranajes de plástico dañados o biela partida (común en Zenius antiguas).',
     ],
     solutionSteps: [
       {
         step: 1,
         description:
-          'Primero, vamos a asegurarnos de que todo esté bien conectado. Revisa que el cable esté firmemente enchufado tanto en la cafetera como en la pared. ¡A veces se afloja un poquito y no nos damos cuenta!',
-        imagePlaceholder: 'Diagrama mostrando el cable de alimentación conectado a la cafetera y al enchufe.',
+          '**Enfriamiento:** Si está caliente, desconecta y espera 20 min. El polímero de la cápsula se contraerá, facilitando la apertura.',
+        imagePlaceholder: 'Icono de reloj.',
       },
       {
         step: 2,
         description:
-          'Ahora, comprobemos si el enchufe funciona. Para estar seguros, prueba a conectar otro aparato que sepas que funciona, como una lámpara o un cargador de móvil. Si tampoco enciende, el problema es del enchufe, no de la cafetera.',
-        imagePlaceholder: 'Icono de una lámpara enchufada en la misma toma de corriente.',
-      },
-      {
-        step: 3,
-        description:
-          '¡Un último paso! Busca el interruptor general de la cafetera. Normalmente es un botón grande en un lateral o en la parte de atrás. Asegúrate de que está en la posición de encendido (marcado como "I" o "ON").',
-        imagePlaceholder: 'Círculo de zoom sobre el interruptor de encendido de una cafetera Nespresso.',
+          '**Asistencia manual:** Con máquina desenchufada, usa una herramienta roma para empujar la cápsula desde abajo (por la salida de café) mientras intentas levantar la palanca suavemente. ¡No fuerces la palanca de plástico!',
+        imagePlaceholder: 'Esquema de desbloqueo manual.',
       },
     ],
     preventionTips: [
-      'Al mover la cafetera, ten cuidado de no doblar o pisar el cable.',
-      'Usa siempre el interruptor de la máquina para apagarla antes de desenchufarla de la pared.',
+      'Expulsar siempre la cápsula inmediatamente tras el uso.',
+      'Lubricar el mecanismo periódicamente.',
     ],
   },
   {
-    id: 'only-water',
-    symptom: 'No sale café, solo agua',
+    id: 'pump-noise-no-water',
+    symptom: 'Ruido de bomba fuerte pero no sale agua (Airlock)',
     causes: [
-      'No se ha introducido una cápsula de café.',
-      'La cápsula está mal colocada o ya ha sido usada.',
-      'El portacápsulas está sucio u obstruido.',
+      'Airlock: Burbuja de aire en la bomba Ulka tras quedarse el depósito vacío.',
+      'Válvula del depósito pegada o filtro de entrada obstruido.',
     ],
     solutionSteps: [
       {
         step: 1,
         description:
-          '¡Vamos a revisar la cápsula! Abre la palanca o el compartimento donde va la cápsula. ¿Has puesto una nueva? Si se te olvidó, solo tienes que poner una y volver a cerrar. ¡Probemos si era eso!',
-        imagePlaceholder: 'Imagen de una mano colocando una cápsula en la cafetera.',
+          '**Cebado manual:** Levanta la palanca. Pulsa botón de café (Lungo). Mientras suena la bomba, mueve la palanca arriba/abajo rítmicamente para generar vacío y ayudar a la bomba a succionar agua.',
+        imagePlaceholder: 'Movimiento de palanca.',
       },
       {
         step: 2,
         description:
-          'Si ya había una cápsula, sácala. ¿Parece que ya está usada? Expúlsala y prueba con una completamente nueva. Asegúrate de que encaja perfectamente en su sitio antes de bajar la palanca.',
-        imagePlaceholder: 'Comparación visual entre una cápsula nueva y una usada.',
+          '**Gemini:** Si es una Gemini, asegúrate de que el depósito está bien asentado y prueba a intercambiar los depósitos izquierdo/derecho para descartar fallo de válvula de pie.',
+      },
+    ],
+    preventionTips: [
+      'No dejar vaciar los depósitos por completo nunca.',
+    ],
+  },
+  
+  // --- GEMINI SPECIFIC (CS203 / CS223) ---
+  {
+    id: 'gemini-milk-froth',
+    symptom: '[Gemini CS223] No espuma leche o escupe vapor y leche caliente',
+    causes: [
+      'Pajita de aspiración dañada: Micro-fisuras en el tubo de plástico impiden el vacío necesario (Efecto Venturi roto).',
+      'Boquilla de vapor sucia: Residuos de leche seca en el inyector calibrado.',
+      'Caldera de vapor calcificada: El termobloque de vapor está saturado.',
+    ],
+    solutionSteps: [
+      {
+        step: 1,
+        description:
+          '**Revisión de Pajas:** Cambia las pajas de plástico y la boquilla de goma negra. Son consumibles (Ref: Kit de Mantenimiento). Si tienen la más mínima grieta o deformación, entra aire y no sube la leche.',
+        imagePlaceholder: 'Kit de aspiración de leche.',
+      },
+      {
+        step: 2,
+        description:
+          '**Limpieza de cabezal:** Desmonta el cabezal de leche completo y sumérgelo en agua muy caliente con detergente desengrasante específico.',
+        imagePlaceholder: 'Limpieza de cabezal.',
       },
       {
         step: 3,
         description:
-          '**¡MUY IMPORTANTE!** Antes de limpiar, asegúrate de que la cafetera esté **DESCONECTADA** de la corriente. Con mucho cuidado, usa un cepillo pequeño y suave o un paño para limpiar cualquier resto de café que veas en el hueco de la cápsula.',
-        imagePlaceholder: 'Icono de seguridad de desenchufar. Mano limpiando el portacápsulas con un cepillo suave.',
+          '**Botón de Limpieza:** Asegúrate de pulsar el botón de "Clean" (Purga) después de cada uso de leche durante 10 segundos para limpiar el conducto interno.',
       },
     ],
     preventionTips: [
-      'Acostúmbrate a expulsar la cápsula justo después de hacer tu café.',
-      'Una vez por semana, limpia el interior del portacápsulas con un paño húmedo (con la máquina desenchufada, por supuesto).',
+      'Usar el kit de mantenimiento de leche regularmente.',
+      'Purgar siempre tras cada uso.',
     ],
   },
   {
-    id: 'water-leak',
-    symptom: 'Hay una fuga de agua por debajo',
+    id: 'gemini-descale-loop',
+    symptom: '[Gemini] Bloqueada en "Descaling" o pide descalcificación constante',
     causes: [
-      'El depósito de agua no está bien encajado en su base.',
-      'La bandeja de goteo está completamente llena y rebosa.',
-      'El depósito de agua puede tener una pequeña fisura o grieta.',
+      'Ciclo interrumpido: Se apagó la máquina o se quitó el agua durante el proceso, corrompiendo el estado lógico.',
+      'Sonda de nivel sucia: La máquina no detecta que el líquido ha pasado por los caudalímetros.',
     ],
     solutionSteps: [
       {
         step: 1,
         description:
-          'Revisemos el depósito de agua. Levántalo y vuelve a colocarlo en su sitio, asegurándote de que encaja perfectamente hasta que escuches un pequeño "clic". A veces, si no está bien puesto, puede gotear.',
-        imagePlaceholder: 'Flechas mostrando cómo encajar correctamente el depósito de agua en la base.',
+          '**Completar ciclo:** Debes repetir el proceso entero. Llena los depósitos con agua limpia. Entra al menú -> Care -> Descaling y deja que termine hasta el final.',
+        imagePlaceholder: 'Pantalla Gemini menú Care.',
       },
       {
         step: 2,
         description:
-          'Ahora, echa un vistazo a la bandeja donde pones la taza (la bandeja de goteo). Sácala con cuidado. ¿Está llena de agua? Si es así, solo tienes que vaciarla en el fregadero y volver a ponerla en su sitio. ¡Buen trabajo!',
-        imagePlaceholder: 'Mano retirando la bandeja de goteo llena de agua.',
-      },
-      {
-        step: 3,
-        description:
-          'Por último, vamos a inspeccionar el depósito de agua. Sácalo y llénalo. Míralo por todos los lados con atención. ¿Ves alguna pequeña grieta por donde pueda salirse el agua? Si ves una, necesitaremos cambiar el depósito.',
-        imagePlaceholder: 'Lupa examinando la superficie de un depósito de agua en busca de grietas.',
+          '**Truco del sensor:** Si se queda en "Rinsing" (Aclarado) eternamente, limpia con alcohol los contactos metálicos en la base donde encajan los depósitos. A veces la humedad crea falsos contactos.',
+        imagePlaceholder: 'Contactos del depósito.',
       },
     ],
     preventionTips: [
-      'Crea el hábito de vaciar la bandeja de goteo todos los días, por ejemplo, por la mañana.',
-      'Trata siempre el depósito de agua con cuidado para evitar golpes que puedan romperlo.',
+      'Nunca interrumpas el proceso de descalcificación una vez iniciado (aprox. 15 min).',
+    ],
+  },
+
+  // --- MOMENTO SPECIFIC ---
+  {
+    id: 'momento-touch-freeze',
+    symptom: '[Momento] Pantalla táctil congelada o negra / No despierta',
+    causes: [
+      'Bloqueo de software: La telemetría intentó actualizar y falló.',
+      'Sensor de proximidad sucio: La máquina cree que no hay nadie y se mantiene en modo Eco.',
+    ],
+    solutionSteps: [
+      {
+        step: 1,
+        description:
+          '**Limpieza de sensor:** Pasa un paño húmedo por la franja negra brillante debajo de la pantalla. Ahí están los sensores IR de proximidad.',
+        imagePlaceholder: 'Limpiando sensor bajo pantalla.',
+      },
+      {
+        step: 2,
+        description:
+          '**Reinicio forzado:** Desenchufa la máquina de la corriente. Espera 2 minutos completos (para descargar condensadores de la placa base). Vuelve a enchufar.',
+      },
+    ],
+    preventionTips: [
+      'Mantener el frontal de la máquina limpio.',
+    ],
+  },
+  {
+    id: 'momento-error-code',
+    symptom: '[Momento] Código de error numérico en pantalla (ej: 301, 303, 1xxx)',
+    causes: [
+      'Error 3xxx: Fallo en el movimiento del grupo (Motor/Engranaje atascado o final de carrera roto).',
+      'Error 1xxx: Problema de flujo de agua (Caudalímetro no cuenta pulsos o Bomba no arranca).',
+    ],
+    solutionSteps: [
+      {
+        step: 1,
+        description:
+          '**Identificación:** Si es un error 301/303, suele ser una cápsula atascada que impide al motor cerrar el grupo. Busca obstrucciones físicas en el alojamiento.',
+        imagePlaceholder: 'Grupo motorizado.',
+      },
+      {
+        step: 2,
+        description:
+          '**Menú Técnico:** Accede al menú técnico (toque rápido en las 4 esquinas: arr-izq, arr-der, abj-der, abj-izq) y busca el "Error Log" para ver la frecuencia del fallo y realizar un I/O test del motor.',
+        imagePlaceholder: 'Patrón de toque en esquinas.',
+      },
+    ],
+    preventionTips: [
+      'No meter los dedos ni forzar la entrada de cápsula mientras el motor se mueve.',
+    ],
+  },
+  
+  // --- COMMON GENERAL ---
+  {
+    id: 'cold-coffee',
+    symptom: 'Café tibio / No calienta suficiente',
+    causes: [
+      'Cal incrustada en el Thermoblock (aislante térmico).',
+      'Sonda NTC defectuosa (lectura errónea).',
+      'Taza fría (roba 10-15ºC al café).',
+    ],
+    solutionSteps: [
+      {
+        step: 1,
+        description:
+          '**Precalentar sistema:** Haz una tirada de solo agua caliente antes de poner la cápsula. Esto calienta tuberías, grupo y taza.',
+        imagePlaceholder: 'Agua caliente en taza.',
+      },
+      {
+        step: 2,
+        description:
+          '**Descalcificación:** Es la causa #1 de baja temperatura. Realiza el ciclo completo con líquido oficial.',
+        imagePlaceholder: 'Líquido descalcificante.',
+      },
+    ],
+    preventionTips: [
+      'Usar tazas precalentadas (calientatazas).',
     ],
   },
 ];

@@ -21,7 +21,8 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
       : 'bg-blue-500 text-white ml-auto rounded-br-none'
   }`;
   
-  const formattedText = message.text.split('\n').map((line, index) => {
+  const textContent = message.text || '';
+  const formattedText = textContent.split('\n').map((line, index) => {
     const parts = line.split(/(\*\*.*?\*\*)/g).map((part, i) => {
         if (part.startsWith('**') && part.endsWith('**')) {
             return <strong key={i}>{part.slice(2, -2)}</strong>;
@@ -36,7 +37,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
     
     try {
         setIsLoadingAudio(true);
-        const base64Audio = await generateSpeech(message.text);
+        const base64Audio = await generateSpeech(textContent);
         setIsLoadingAudio(false);
         setIsSpeaking(true);
         await playPcmAudio(base64Audio);
@@ -48,6 +49,11 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
         setIsSpeaking(false);
     }
   };
+
+  // Safely check if grounding chunks exist and have length
+  const hasGroundingChunks = message.groundingMetadata?.groundingChunks && 
+                             Array.isArray(message.groundingMetadata.groundingChunks) && 
+                             message.groundingMetadata.groundingChunks.length > 0;
 
   return (
     <div className={`flex items-start gap-4 ${!isModel ? 'justify-end' : ''}`}>
@@ -88,11 +94,11 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
             </div>
         )}
 
-         {message.groundingMetadata && message.groundingMetadata.groundingChunks.length > 0 && (
+         {hasGroundingChunks && (
           <div className="mt-4 pt-3 border-t border-gray-200">
             <h4 className="text-xs font-semibold text-gray-500 mb-2">Fuentes:</h4>
             <ul className="space-y-2">
-              {message.groundingMetadata.groundingChunks.map((chunk, index) => {
+              {message.groundingMetadata!.groundingChunks.map((chunk, index) => {
                  if (chunk.web?.uri) {
                     return (
                         <li key={`web-${index}`} className="text-xs">

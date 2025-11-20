@@ -244,13 +244,17 @@ const App: React.FC = () => {
   };
 
   const handleLoadRepair = (repair: SavedRepair) => {
-    const isInitialState = messages.length <= 2 && messages.some(m => m.text.includes("Hola, preséntate."));
+    if (!repair) return;
+
+    // Safety check to prevent undefined messages
+    const safeMessages = Array.isArray(repair.messages) ? repair.messages : [];
+    const isInitialState = messages.length <= 2 && messages.some(m => m.text && m.text.includes("Hola, preséntate."));
     
     if (!isInitialState && !window.confirm("¿Seguro que quieres cargar esta reparación? Se perderá tu conversación actual no guardada.")) {
       return;
     }
     
-    setMessages(repair.messages);
+    setMessages(safeMessages);
     setMachineModel(repair.machineModel);
     setSerialNumber(repair.serialNumber);
     setShowChecklist(!!(repair.machineModel && checklists[repair.machineModel]));
